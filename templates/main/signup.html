@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>UDIO SIGNIN</title>
+	<link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700|Lato:400,100,300,700,900' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/s.css') }}">
+</head>
+<body>
+	<div class="container">
+		<div class="top">
+			<h1 id="title" class="hidden">ARE YOU A <span id="logo"><b><b>NEWBIE ?</br>START </span></b></b>HERE</h1>
+		</div>
+		<div class="login-box animated fadeInUp">
+			<div class="box-header">
+				<h2>Sign Up</h2>
+			</div>
+			<label id="l1" for="firstname">Firstname</label><input type="text" id="firstname" size="60">
+			<br/>
+			<label id="l2" for="lastname">lastname</label><input type="text" id="lastname" size="60">
+			<br/>
+			<label for="dob">Date of birth (ddmmyyyy)</label><input type="date" id="dob" size="60">
+			<br/>
+			<label for="username">Username</label><input type="text" id="username" size="60">
+			<br/>
+			<label for="password">Password</label><input type="password" id="password" size="60">
+			<br/>
+			<label for="confirm_password">Confirm Password</label><input type="password" id="password" size="60">
+			<br/>
+			<label for="address">Address</label><textarea name="Address"></textarea>
+			<br/>
+			<label for="country">Country</label><input type="text" id="country" size="60">
+			<br/>
+			<label for="state">State</label><input type="text" id="state" size="60">
+			<br/>
+			<label for="district">District</label><input type="text" id="District" size="60">
+			<br/>
+			<label for="pin">Pin</label><input type="text" id="pin" size="60">
+			<br/>
+			<label for="email">E-mail</label><input type="email" id="email" size="60">
+			<br/>
+			<label for="mobilenumber">Mobile Number</label><input type="text" id="mobilenumber" size="60">
+			<br/>
+			<button type="submit">signup<a href="signup"></button>
+			<br/>
+		</div>
+	</div>
+</body>
+</html>
