@@ -1,20 +1,15 @@
 # module contains all general views 
 
-from flask import request,render_template,g
+from flask import request,render_template,g,redirect,session,url_for
 from app import application as app
-from rethinkdb.errors import RqlDriverError
+from app.model import create_connection, close_connection
+from rethinkdb.errors import RqlRuntimeError,RqlDriverError
 import rethinkdb as r
-from model import dbSetUp
-from app.configuration import RDB_HOST, RDB_PORT ,UDIO_DB
-from forms import To_From_Form
-
-dbSetUp()
-
+from app.configuration import RDB_PORT,UDIO_DB,RDB_HOST
 
 
 @app.route('/',methods=['GET'])
 @app.route('/home',methods=['GET'])
-
 def home():
         title="Welcome to Udio"
         form=To_From_Form()
@@ -38,9 +33,38 @@ def teardown_request(exception):
 
 
 
-@app.route('/login')
+@app.route('/login',methods=['GET','POST'])
 def login():
-    return render_template('login.html')
+    if request.method=='GET':
+         return render_template('main/login.html')
+    elif request.method=='POST':
+         username=request.form['username']
+         password=request.form['password']
+         if username == '' or password=='':
+             flash('enter valid username or password')
+             return render_template('main/login.html')
+        
+         conn=create_connection()
+         user=list(r.db('udio').table('users').filter(r.row['username']==username and r.row['password']==password).run(conn))
+         name= user[0]['firstname'] + user[0]['lastname']
+         count=r.db('udio').table('users').filter(r.row['username']==username and r.row['password']==password).count().run(conn)
+         conn.close()
+         if count >0:
+             access=1
+         else:
+             access=0
+         if access==0:
+             return "authentication error"
+         else:
+             return redirect(url_for('dashboard',user=user,name=name))
+
+@app.route('/logout')
+def logout():
+    session.pop('username')
+    return render_template('main/login.html')
 
 
-
+@app.route('/dashboard/<user>/<name>')
+def dashboard(user,name):
+    print name
+    return render_template('admin/select_ride.html',name=name)

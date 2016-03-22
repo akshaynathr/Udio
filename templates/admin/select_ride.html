@@ -1,0 +1,16 @@
+{% extends "admin/admin.html" %}
+{% block selectRide %}
+	  
+	<div class="col-md-10" style="text-align:center;">
+			 <h3> Select route to send your package </h3>
+                <form name="place" method="post">
+                                  <label> From </label>
+                  <input name="from" type="text" class="form-control" style='width:100%'>
+                  <br>
+                  <label> To &nbsp &nbsp</label>
+                  <input type="text" name="to" class="form-control" style="width:100%" />
+                  <br>
+                  <input type="submit" />
+                </form>
+    </div>
+{% endblock %}

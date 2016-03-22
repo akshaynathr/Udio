@@ -2,6 +2,17 @@ from app.model import create_connection, close_connection
 import rethinkdb as r
 from app import application as app
 from flask import render_template , request
+
+def check_duplicate(username):
+    conn=create_connection()
+    count=r.db('udio').table('users').filter({'username':username }).count().run(conn)
+    if count > 0:
+        return 1
+    else:
+        return 0
+
+    
+
 @app.route('/find_rider',methods=['GET','POST'])
 def find_riderr():
     if request.method=='GET':
@@ -55,7 +66,7 @@ def sender_reg():
         mobile=request.form['mobile']
         email=request.form['email']
         conn=create_connection()
-        access=0
+        access=check_duplicate(username)
     if access==1:
         return "duplicate error"
     else:
@@ -77,6 +88,18 @@ def sender_reg():
         close_connection(conn)
         return "User registered"
 
+@app.route('/selectride')
+def select_ride():
+    from_place=request.form['from']
+    to_place=request.form['to']
+    if from_place == to_place:
+        flash ("Selected places are same")
+        return render_template('admin/admin.html')
+    else:
+        conn=create_connection()
+        rides=list(r.db('udio').table('users').filter(r.row['from_place']==from_place and r.row['to_place']==to_place).run(conn))
+        conn.close()
+        return render_template('admin/rides.html')
 
 
 
