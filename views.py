@@ -7,7 +7,6 @@ from rethinkdb.errors import RqlRuntimeError,RqlDriverError
 import rethinkdb as r
 from app.configuration import RDB_PORT,UDIO_DB,RDB_HOST
 
-
 @app.route('/',methods=['GET'])
 @app.route('/home',methods=['GET'])
 def home():
@@ -23,15 +22,12 @@ def before_request():
     except RqlDriverError:
         abort(503, "Database connection could not be established.")
 
-
 @app.teardown_request
 def teardown_request(exception):
     try:
         g.rdb_conn.close()
     except AttributeError:
         pass
-
-
 
 @app.route('/login',methods=['GET','POST'])
 def login():
@@ -43,12 +39,9 @@ def login():
          if username == '' or password=='':
              flash('enter valid username or password')
              return render_template('main/login.html')
-        
-         conn=create_connection()
-         user=list(r.db('udio').table('users').filter(r.row['username']==username and r.row['password']==password).run(conn))
-         name= user[0]['firstname'] + user[0]['lastname']
-         count=r.db('udio').table('users').filter(r.row['username']==username and r.row['password']==password).count().run(conn)
-         conn.close()
+         user=list(r.db('udio').table('users').filter(r.row['username']==username and r.row['password']==password).run(g.rdb_conn))
+         count=r.db('udio').table('users').filter(r.row['username']==username and r.row['password']==password).count().run(g.rdb_conn)
+         session['username']=user
          if count >0:
              access=1
          else:
@@ -56,15 +49,28 @@ def login():
          if access==0:
              return "authentication error"
          else:
-             return redirect(url_for('dashboard',user=user,name=name))
+             return redirect(url_for('dashboard',username=username,password=password))
 
 @app.route('/logout')
 def logout():
-    session.pop('username')
+    print session['username'] 
     return render_template('main/login.html')
 
+@app.route('/dashboard/<username>/<password>',methods=['POST','GET'])
+def dashboard(username,password):
+    name=''
+    if request.method=='GET':
+        user=list(r.db('udio').table('users').filter(r.row['username']==username and r.row['password']==password).run(g.rdb_conn))
+        name=user[0]['firstname']+user[0]['lastname']
+        return render_template('admin/select_ride.html',name=name)
+    if request.method=='POST':
+        to_place=request.form['to_place']
+        from_place=request.form['from_place']
+        return redirect(url_for('find_rider',to_place=to_place,from_place=from_place))
 
-@app.route('/dashboard/<user>/<name>')
-def dashboard(user,name):
-    print name
-    return render_template('admin/select_ride.html',name=name)
+@app.route('/find_rider/<to_place>/<from_place>')
+def find_rider(to_place,from_place):
+    riders=list(r.db('udio').table('rides').filter(r.row['from_place']==from_place and r.row['to_place']==to_place).run(g.rdb_conn))
+    return render_template('admin/profile.html',riders=riders,name="Akshaynathr")
+    
+     

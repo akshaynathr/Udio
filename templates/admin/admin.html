@@ -4,6 +4,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Udio Dashboard</title>
+     <!-- jQuery 2.1.4 -->
+    <script src="{{ url_for ('static',filename='plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -242,6 +247,8 @@
                 </ul>
                     {% block selectRide %}
                 
+                    {% endblock %}
+                    {% block Rides_List %}
                     {% endblock %}
                
               </div><!-- /.col -->
