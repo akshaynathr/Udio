@@ -1,12 +1,10 @@
 {% extends "admin/admin.html" %}
-{% block selectRide %}
-	  
-	<div class="col-md-10" style="text-align:center;">
-			 <h3> Select route to send your package </h3>
-                <form name="place" method="post" a >
-                                  <label> From </label>
-
-                                  <select name="from_place" style="width:100%">
+{% block tripplan %}
+<div class="col-md-4" style="text-align:center;">
+	<h4> Create Ride </h4>
+	<style type="text/css"> input { width:60%; }</style>
+	<form method="post">
+		<label>From place:</label><select name="from_place" style="width:100%">
   				 					<option value="alappuzha">Alappuzha</option>
    									<option value="ernakulam">Ernakulam</option>
   									 <option value="idukki">Idukki</option>
@@ -22,11 +20,8 @@
  									 <option value="thrissur">Thrissur</option>
  									 <option value="wayanad">Wayanad</option>
 								  </select>
-
-
-                  <br>
-                  <label> To &nbsp &nbsp</label>
-                  <select name="to_place" style="width:100%">
+<br>
+		<label>To place:</label>  <select name="to_place" style="width:100%">
   				 					<option value="alappuzha">Alappuzha</option>
    									<option value="ernakulam">Ernakulam</option>
   									 <option value="idukki">Idukki</option>
@@ -42,14 +37,13 @@
  									 <option value="thrissur">Thrissur</option>
  									 <option value="wayanad">Wayanad</option>
 								  </select>
-                  <br>
-                  <div class="input-group date" data-provide="datepicker">
-     <input type="date" class="form-control" name="date"> 
-    <div class="input-group-addon">
-        <span class="glyphicon glyphicon-th"></span>
-    </div>
+<br>
+		<label>Date:</label><input type="date" name="date"><br>
+		<label>Vehicle:</label><input type="text" name="vehicle"><br>
+		<label>Extra info:</label><input type="text" name="extra_info"><br>
+		<label>Time:</label><input type="time" name="time"><br>
+		<input type="submit">
+	</form>
+
 </div>
-                  <input type="submit" />
-                </form>
-    </div>
 {% endblock %}

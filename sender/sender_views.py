@@ -1,7 +1,9 @@
 from app.model import create_connection, close_connection
 import rethinkdb as r
 from app import application as app
-from flask import render_template , request
+from flask import render_template , request,session
+
+app.secret_key='ADSDSDSFAW@!@!!33232'
 
 def check_duplicate(username):
     conn=create_connection()
@@ -57,6 +59,7 @@ def sender_reg():
         lastname=request.form['lastname']
         address=request.form['address']
         dob=request.form['dob']
+        licence=request.form['licence']
         username=request.form['username']
         password=request.form['password']
         country=request.form['country']
@@ -75,6 +78,7 @@ def sender_reg():
                   'lastname':lastname,
                   'address':address,
                   'dob':dob,
+                  'licence':licence,
                   'username':username,
                   'password':password,
                   'country':country,
@@ -100,9 +104,5 @@ def select_ride():
         rides=list(r.db('udio').table('users').filter(r.row['from_place']==from_place and r.row['to_place']==to_place).run(conn))
         conn.close()
         return render_template('admin/rides.html')
-
-
-
-
 
 

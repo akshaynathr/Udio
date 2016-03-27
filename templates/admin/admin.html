@@ -43,6 +43,23 @@
     <![endif]-->
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
+  <script type="text/javascript">
+  //javascript for sidelinks
+
+  function Tripplan()
+  {
+    var xhttp= new XMLHttpRequest();
+    xhttp.open("POST","tripplan",true);
+    alert("GET");
+    xhttp.send();
+  }
+
+
+
+
+
+
+  </script>
     <div class="wrapper">
 
       <header class="main-header">
@@ -65,44 +82,7 @@
               
               <!-- Notifications: style can be found in dropdown.less -->
               <li class="dropdown notifications-menu">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <i class="fa fa-bell-o"></i>
-                  <span class="label label-warning">10</span>
-                </a>
-                <ul class="dropdown-menu">
-                  <li class="header">You have 10 notifications</li>
-                  <li>
-                    <!-- inner menu: contains the actual data -->
-                    <ul class="menu">
-                      <li>
-                        <a href="#">
-                          <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#">
-                          <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the page and may cause design problems
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#">
-                          <i class="fa fa-users text-red"></i> 5 new members joined
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#">
-                          <i class="fa fa-shopping-cart text-green"></i> 25 sales made
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#">
-                          <i class="fa fa-user text-red"></i> You changed your username
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li class="footer"><a href="#">View all</a></li>
-                </ul>
+                
               </li>
               <!-- Tasks: style can be found in dropdown.less -->
               
@@ -160,7 +140,7 @@
           <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
             <li class="active treeview">
-              <a href="admin.html">
+              <a href="/dashboard">
                 <i class="fa fa-dashboard"></i> <span>Dashboard</span> <i class=""></i>
               
             </li>
@@ -181,7 +161,7 @@
               </a>
             </li>
               <li>
-              <a href="pages/widgets.html">
+              <a href="/tripplan">
                 <i class="fa fa-th"></i> <span>Upload Trip Plan</span> <small class="label pull-right bg-green">new</small>
               </a>
             </li>
@@ -249,6 +229,9 @@
                 
                     {% endblock %}
                     {% block Rides_List %}
+                    {% endblock %}
+
+                     {% block tripplan %}
                     {% endblock %}
                
               </div><!-- /.col -->
