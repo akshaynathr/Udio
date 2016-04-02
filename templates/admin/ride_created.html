@@ -117,7 +117,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 
     </style>
- {% block Rides_List %}
+ {% block Ride_create %}
  
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 <div class="row bootstrap snippets"  >
@@ -156,15 +156,13 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 
     			<div class="pad-btm">
-    				<button class="btn btn-primary" id={{rider.id }}>Request</button>
-    				<button class="btn btn-success">Message</button>
+    				<button class="btn btn-primary" id={{rider.id }}  >Request</button>
+    				<button class="btn btn-success">Cancel</button>
     			</div>
     		</div>
     	</div>
     </div>    
-    {% else %}
-    <div class="col-md-6" style= "margin:10px; width:100%; ">
-    <h3> It seems that no rider has been found in your route </h3>
+ 
     </div>
 
     {% endfor %}

@@ -18,6 +18,19 @@
 			</div>
 
 		<form method="post" >
+		<div>
+									<!-- Display flashed messages -->
+      {% with msgs = get_flashed_messages() %}
+        {% if msgs %}
+          {%- for msg in msgs %}
+            <div class="alert alert-info" style="color:white">
+              {{ msg }}
+            </div>
+          {% endfor -%}
+        {% endif %}
+      {% endwith %}
+
+		</div>
 			<label for="username">Username</label>
 			<br/>
 			<input type="text" id="username" name="username" size="45">
