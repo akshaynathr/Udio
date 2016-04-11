@@ -4,12 +4,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Udio Dashboard</title>
+    <link rel="shortcut icon" href="{{ url_for('static',filename='images/fav.png') }}">
      <!-- jQuery 2.1.4 -->
     <script src="{{ url_for ('static',filename='plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
     <!-- jQuery UI 1.11.4 -->
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
     
-    <!-- Tell the browser to be responsive to screen width -->
+    <!-- Tell the browser to be responsive <link rel="shortcut icon" href="favicon.ico">to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="{{ url_for('static',filename='bootstrap/css/bootstrap.min.css') }}">
@@ -45,16 +46,7 @@
   <body class="hold-transition skin-blue sidebar-mini">
   <script type="text/javascript">
   //javascript for sidelinks
-
-  function Tripplan()
-  {
-    var xhttp= new XMLHttpRequest();
-    xhttp.open("POST","tripplan",true);
-    alert("GET");
-    xhttp.send();
-  }
-
-
+ 
 
 
 
@@ -64,7 +56,7 @@
 
       <header class="main-header">
         <!-- Logo -->
-        <a href="index2.html" class="logo">
+        <a href="/dashboard" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><b>U</b>DIO</span>
           <!-- logo for regular state and mobile devices -->
@@ -143,6 +135,11 @@
               
             </li>
              
+             <li>
+              <a href="/requests_area">
+                <i class="fa fa-th"></i> <span>Ride Requests</span> <small class="label pull-right bg-green">new</small>
+              </a>
+            </li>
             <li>
               <a href="/consignments">
                 <i class="fa fa-th"></i> <span>Current Consignments</span> <small class="label pull-right bg-green">new</small>
@@ -150,7 +147,7 @@
             </li>
               <li>
               <a href="/delivery">
-                <i class="fa fa-th"></i> <span>Delivery History</span> <small class="label pull-right bg-green">new</small>
+                <i class="fa fa-th"></i> <span> History</span> <small class="label pull-right bg-green">new</small>
               </a>
             </li>
               <li>
@@ -163,11 +160,7 @@
                 <i class="fa fa-th"></i> <span>Upload Trip Plan</span> <small class="label pull-right bg-green">new</small>
               </a>
             </li>
-              <li>
-              <a href="/reviews">
-                <i class="fa fa-th"></i> <span>Reviews</span> <small class="label pull-right bg-green">new</small>
-              </a>
-            </li>
+             
            
           </ul>
         </section>
@@ -227,22 +220,38 @@
                     {% block Rides_List %}
                     {% endblock %}
 
-                     {% block tripplan %}
+                    {% block tripplan %}
                     {% endblock %}
 
-                     {% block tracking %}
+                    {% block tracking %}
                     {% endblock %}
 
 
-                     {% block reviews %}
+                    {% block reviews %}
                     {% endblock %}
 
                     {% block consignments %}
                     {% endblock %}
+
+                    {% block mapview %}
+                    {% endblock %}
+
+                     {% block box %}
+                    {% endblock %}
+
+                     {% block cancel_ride %}
+                    {% endblock %}
                
-             {% block   Ride_create %}
+             {% block Ride_create %}
                   {% endblock %}
-              </div><!-- /.col -->
+
+
+                {% block request_sent %}
+                  {% endblock %}
+                   {% block requests_area %}
+                  {% endblock %}
+
+                                </div><!-- /.col -->
             
 
 

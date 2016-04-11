@@ -14,12 +14,13 @@ def dbSetUp():
         r.db_create(UDIO_DB).run(connection)
         r.db(UDIO_DB).table_create('users').run(connection)
         r.db(UDIO_DB).table_create('rides').run(connection)
+        r.db('udio').table_create('packages').run(connection)
+        r.db('udio').table_create('messages').run(connection)
         print( "Database setup completed")
      except RqlRuntimeError:
         print ("Database already exists")
      finally :
         connection.close()
-
 
 def create_connection():
     connection=r.connect(host=RDB_HOST,port=RDB_PORT)

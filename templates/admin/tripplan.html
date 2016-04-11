@@ -1,9 +1,31 @@
 {% extends "admin/admin.html" %}
 {% block tripplan %}
-<div class="col-md-4" style="text-align:center;">
-	<h4> Create Ride </h4>
+<div class="col-md-3" style="text-align:center;">
+	
 	<style type="text/css"> input { width:60%; }</style>
+	 <style type="text/css">
+    .container {
+
+        width: 500px;
+        clear: both;
+    }
+    .container input {
+        width: 100%;
+        clear: both;
+    }
+     .container select {
+        width: 100%;
+        clear: both;
+    }
+    .container h4 {
+        width: 100%;
+        clear: both;
+    }
+
+    </style><div class="container" >
+    <h4> Create Ride </h4>
 	<form method="post">
+
 		<label>From place:</label><select name="from_place" style="width:100%">
   				 					<option value="alappuzha">Alappuzha</option>
    									<option value="ernakulam">Ernakulam</option>
@@ -44,6 +66,6 @@
 		<label>Time:</label><input type="time" name="time"><br>
 		<input type="submit">
 	</form>
-
+</div>
 </div>
 {% endblock %}

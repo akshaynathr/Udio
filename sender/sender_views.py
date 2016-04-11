@@ -2,7 +2,7 @@ import json
 from app.model import create_connection, close_connection
 import rethinkdb as r
 from app import application as app
-from flask import render_template , request,session,flash
+from flask import render_template , request,session,flash,redirect,url_for
 import os
 from werkzeug import secure_filename
 
@@ -21,8 +21,7 @@ def check_duplicate(username):
     else:
         return 0
 
-    
-
+'''
 @app.route('/find_rider',methods=['GET','POST'])
 def find_riderr():
     if request.method=='GET':
@@ -31,10 +30,10 @@ def find_riderr():
         to=request.form['to']
         from_place=request.form['from_place']
         conn=create_connection()
-        data=r.db('UDIO').table('ride').filter({'from':from_place}).run(conn)
+        data=r.db('udio').table('ride').filter({'from':from_place}).run(conn)
         close_connection(conn)
         return data
-
+'''
 @app.route('/create_ride',methods=['GET','POST'])
 def create_ride(sender_id):
     if request.method=='GET':
@@ -90,7 +89,7 @@ def sender_reg():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
 
         else :
-            return "Error"
+            return "Error!.Profile image uploaded is incompatible"
         r.db('udio').table('users').insert([
                 { 'firstname':firstname,
                   'lastname':lastname,
@@ -122,7 +121,7 @@ def select_ride():
         return render_template('admin/admin.html')
     else:
         conn=create_connection()
-        rides=list(r.db('udio').table('users').filter(r.row['from_place']==from_place and r.row['to_place']==to_place).order_by(index='date').run(conn))
+        rides=list(r.db('udio').table('users').filter((r.row['from_place']==from_place)).filter (r.row['to_place']==to_place).order_by(index='date').run(conn))
         conn.close()
         return render_template('admin/rides.html')
 
@@ -133,20 +132,22 @@ def tracking():
             name=session['user'][0]['firstname']+session['user'][0]['lastname']
             return render_template('admin/tracking.html',name=name,img=session['user'][0]['image_path'])
     if request.method=='POST':
+        ride_id=request.form['ride_id']
+        return redirect(url_for('map_view',id=ride_id))
         return "track"
 
-@app.route('/reviews')
-def reviews():
+@app.route('/delivery')
+def delivery():
     if 'user' in session:
         name=session['user'][0]['firstname']+session['user'][0]['lastname']
         conn=create_connection()
         rides=list(r.db('udio').table('rides').filter({'rider_id':session['user'][0]['id']}).run(conn,time_format="raw"))
+        sender=list(r.db('udio').table('packages').filter({'sender_id':session['user'][0]['id']}).run(conn,time_format="raw"))
         #return json.dumps(rides)
         close_connection(conn)
-        return render_template('admin/reviews.html',name=name,img=session['user'][0]['image_path'],rides=rides)
+        return render_template('admin/reviews.html',name=name,img=session['user'][0]['image_path'],rides=rides,sender=sender)
     else :
         flash("You are not logged in ")
         return redirect(url_for('login.html'))
-
 
 
